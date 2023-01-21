@@ -1,11 +1,12 @@
 import React, {PropsWithChildren} from 'react';
-import {View, Text} from 'react-native';
-import {styles} from '../styles/FormScreenStyles';
+import {styles} from '../styles/form/QuestionStyles';
+import {AnswerStruct} from '../types/form/formTypes';
 import {Answers} from './Answers';
+import {Box, Text} from 'native-base';
 
 type QuestionProps = PropsWithChildren<{
   question: string;
-  answers: Array<{answer: string; answer_id: string}> | null;
+  answers: Array<AnswerStruct> | null;
   id: string;
 }>;
 
@@ -14,11 +15,12 @@ export const Question = ({
   answers,
   id,
 }: QuestionProps): JSX.Element => {
-  console.log(question, answers, id);
   return (
-    <View style={styles.sectionContainer} id={id}>
-      <Text style={[styles.sectionTitle]}>{question}</Text>
-      <Answers answers={answers} />
-    </View>
+    <Box style={styles.sectionContainer} id={id}>
+      <Text alignSelf={'center'} style={[styles.sectionTitle]}>
+        {question}
+      </Text>
+      <Answers answers={answers} id={id} />
+    </Box>
   );
 };

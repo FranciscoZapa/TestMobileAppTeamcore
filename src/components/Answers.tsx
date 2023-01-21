@@ -1,17 +1,23 @@
 import React, {PropsWithChildren} from 'react';
 import {FlatList} from 'react-native';
+import {AnswerStruct} from '../types/form/formTypes';
 import {Answer} from './Answer';
 
 type AnswersProps = PropsWithChildren<{
-  answers: Array<{answer: string; answer_id: string}> | null;
+  answers: Array<AnswerStruct> | null;
+  id: string;
 }>;
 
-export const Answers = ({answers}: AnswersProps): JSX.Element => {
+export const Answers = ({answers, id}: AnswersProps): JSX.Element => {
   return (
     <FlatList
       data={answers}
       renderItem={({item}) => (
-        <Answer answer={item.answer} id={item.answer_id} />
+        <Answer
+          answer={item.answer}
+          answer_id={item.answer_id}
+          question_id={id}
+        />
       )}
       keyExtractor={item => item.answer_id}
     />
