@@ -1,8 +1,10 @@
 import {useState, useEffect} from 'react';
+import {setQuestions} from '../core/features/form/formSlice';
+import {store} from '../core/store';
 import {getQuestionsService} from '../services/FormServices';
+import {QuestionState} from '../types/form/formTypes';
 
 export const useQuestions = () => {
-  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -10,10 +12,11 @@ export const useQuestions = () => {
     async function getQuestions() {
       try {
         const res = await getQuestionsService();
-        const values = await res.data.data;
-        setData(values);
+        const values: Array<QuestionState> = await res.data.data;
+        store.dispatch(setQuestions(values));
         setLoading(false);
       } catch (e: any) {
+        console.error(e);
         setError(e);
         setLoading(false);
       }
@@ -22,5 +25,5 @@ export const useQuestions = () => {
     getQuestions();
   }, []);
 
-  return {data, loading, error};
+  return {loading, error};
 };

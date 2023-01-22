@@ -1,27 +1,46 @@
-import React from 'react';
-import {PropsWithChildren} from 'react';
-import {Text} from 'react-native';
+import React, {useCallback} from 'react';
 import {Form} from '../components/Form';
 import {SubmitButton} from '../components/SubmitButton';
+import {useAppSelector} from '../core/hooks';
 import {useQuestions} from '../hooks/useQuestions';
-
-type Screen = PropsWithChildren<{navigation: any}>;
+import {Box} from 'native-base';
+import {styles} from '../styles/form/FormScreenStyles';
+import {Header} from '../components/Header';
+import {useSendForm} from '../hooks/useSendForm';
+import {Screen} from '../types/screens/screenTypes';
+import {Loading} from '../components/Loading';
+import {ErrorMessage} from '../components/ErrorMessage';
 
 export const FormScreen = ({navigation}: Screen): JSX.Element => {
-  const {data, loading, error} = useQuestions();
+  const {questions, answers, formIsFull} = useAppSelector(state => state.form);
+  const {loading, error} = useQuestions();
+  const {loading: loadingSend, sendForm} = useSendForm(
+    formIsFull,
+    answers,
+    navigation,
+  );
+
+  const handleSubmit = useCallback(async () => {
+    sendForm();
+  }, [sendForm]);
 
   if (loading) {
-    return <Text>Loading</Text>;
+    return <Loading />;
   }
 
   if (error) {
-    return <Text>Text</Text>;
+    return <ErrorMessage />;
   }
 
   return (
-    <>
-      <Form data={data} />
-      <SubmitButton />
-    </>
+    <Box height={'100%'} style={styles.container}>
+      <Header />
+      <Form data={questions} />
+      <SubmitButton
+        onPress={handleSubmit}
+        disabled={!formIsFull}
+        loading={loadingSend}
+      />
+    </Box>
   );
 };
