@@ -10,7 +10,7 @@ export const ErrorMessage = (): JSX.Element => (
     height={'100%'}
     style={styles.box}>
     <HStack space={2} justifyContent="center">
-      <Heading color="black" fontSize="md">
+      <Heading color="white" fontSize="md">
         {errorlabel}
       </Heading>
     </HStack>

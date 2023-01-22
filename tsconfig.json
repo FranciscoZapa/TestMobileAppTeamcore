@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     "moduleResolution": "NodeNext",
+    "strict": true
   },
+  "typeRoots": ["./src/types"],
   "extends": "@tsconfig/react-native/tsconfig.json"
 }
