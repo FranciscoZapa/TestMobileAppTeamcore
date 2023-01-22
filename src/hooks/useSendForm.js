@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {axiosInstance} from '../libs/axios';
 import {Alert} from 'react-native';
 import {store} from '../core/store';
