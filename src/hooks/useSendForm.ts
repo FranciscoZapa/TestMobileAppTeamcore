@@ -3,8 +3,13 @@ import {axiosInstance} from '../libs/axios';
 import {Alert} from 'react-native';
 import {store} from '../core/store';
 import {resetAnswers} from '../core/features/form/formSlice';
+import {AnswerState} from '../types/form/formTypes';
 
-export const useSendForm = (formIsFull, answers, navigation) => {
+export const useSendForm = (
+  formIsFull: boolean,
+  answers: Array<AnswerState>,
+  navigation: any,
+) => {
   const [loading, setLoading] = useState(false);
   const sendForm = async () => {
     if (formIsFull) {
